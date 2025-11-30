@@ -787,7 +787,7 @@ export const SetQuestion = () => {
           <div className="max-w-[80%] sm:max-w-4xl mx-auto text-richblue-900">
             <div className="flex items-center gap-2 text-xl">
               <h1 className=" font-bold mt-8 mb-8 font-inter">
-                Set Assessment Rubrics
+                Set Your Rubrics
               </h1>
               <div>
                 <img src={img16} alt="" className="w-10 h-10  bg-cover" />{" "}

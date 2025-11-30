@@ -381,7 +381,7 @@ const Assignment = () => {
                           htmlFor="terms"
                           className=" font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
-                          PostTask Visibility
+                          Evaluative Test Visibility
                         </label>
                       </div>
                     </div>
@@ -513,7 +513,7 @@ const Assignment = () => {
                         htmlFor="preTestTopic"
                         className="block font-medium mb-2 leading-6"
                       >
-                        Pre-Test Topic
+                        Diagnostic Test Topic
                       </label>
                       <div>
                         <textarea
@@ -533,7 +533,7 @@ const Assignment = () => {
                         htmlFor="postTestTopic"
                         className="block font-medium mb-2 leading-6"
                       >
-                        Post-Test Topic
+                        Evaluative Test Topic
                       </label>
                       <div>
                         <textarea

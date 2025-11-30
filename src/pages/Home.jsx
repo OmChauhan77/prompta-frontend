@@ -2,7 +2,7 @@ import React from 'react'
 import Img1 from "../assets/img1.png"
 import Img2 from "../assets/img4.png"
 import Img3 from "../assets/img3.png"
-import Img33 from "../assets/img33.png"
+import Img33 from "../assets/img33.2.png"
 import Img4 from "../assets/img2.png"
 import img12 from "../assets/img12.jpg"
 import { MdEmail } from "react-icons/md";
@@ -254,7 +254,7 @@ const Home = () => {
 
                             </div>
 
-                            <p className='text-xl  text-start  font-medium text-richblue-700 font-pj'>Welcome to <span className='font-semibold'>{LOGO}</span>! </p>
+                            <p className='text-xl  text-start  font-medium text-richblue-700 font-pj'>Welcome to <span className='font-semibold'>{LOGO}</span>-Performance Review Of Manuscript Profeciency Tool for Assessment!</p>
 
                             <p className='text-xl text-start  font-medium text-richblue-700 font-pj'>Feeling stuck with your writing? </p>
 
