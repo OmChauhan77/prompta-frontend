@@ -32,6 +32,19 @@ const UserSubmission = () => {
   const [submissionData, setSubmissionData] = useState()
   const [feedback, setFeedback] = useState('')
   const [questionData, setQuestionData] = useState();
+  // helper to find original quesType from questionData using heading and question text
+  const getQuesType = (headingType, questionText, section = "expert") => {
+    try {
+      const sectionKey =
+        section === "user" ? "userQues" : section === "peer" ? "peerQues" : "expertQues";
+      const group = questionData?.[0]?.[sectionKey]?.find((g) => g.headingType === headingType);
+      if (!group) return null;
+      const qObj = group.questions.find((q) => q.ques === questionText);
+      return qObj?.quesType || null;
+    } catch (err) {
+      return null;
+    }
+  };
   const [expertfinalResponses, setExpertFinalResponses] = useState([]);
   const [peertotal, setPeertotal] = useState()
   const { assignmentData } = useSelector((state) => state.profile)
@@ -471,6 +484,7 @@ const [marksGot,setmarksGot]=useState()
                             {response.responses.length > 0 && <div className='font-semibold font-roboto underline'>{response.headingType}</div>}
 
                             {response.responses.map((ques, idx) => {
+                              const qType = getQuesType(response.headingType, ques.question, 'peer');
                               return (
                                 <div key={idx} className='text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-xl cursor-pointer'>
                                   <div className='flex flex-col max-w-[70%] min-w-[70%]'>
@@ -489,11 +503,11 @@ const [marksGot,setmarksGot]=useState()
                                       )}
                                     </div>
                                   </div>
-                                  {ques.answer === null && <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
-                                    <p>{ques.markGot}/{ques.actualMark}</p>
-                                  </div>
-
-                                  }
+                                  {!(/^Response$/i.test(qType || "")) && (
+                                    <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
+                                      <p>{ques.markGot}/{ques.actualMark}</p>
+                                    </div>
+                                  )}
 
                                 </div>
                               );
@@ -635,7 +649,88 @@ const [marksGot,setmarksGot]=useState()
                                     )}
                                 </div>
 
-                                {question.quesType !== "Response" && (
+                                {(/check.*response/i).test(question.quesType || "") && (
+                                  <div className='flex flex-col gap-2 w-full'>
+                                    <label className="flex items-center gap-3">
+                                      <input
+                                        type="checkbox"
+                                        checked={!!expertfinalResponses[index]?.responses[idx]?.checked}
+                                        onChange={(e) => {
+                                          const checked = e.target.checked;
+                                          setExpertFinalResponses((prevResponses) => {
+                                            const updatedResponses = [...prevResponses];
+                                            updatedResponses[index].responses[idx] = {
+                                              ...updatedResponses[index].responses[idx],
+                                              checked,
+                                            };
+                                            return updatedResponses;
+                                          });
+                                        }}
+                                      />
+                                      <span className="font-roboto text-sm">Mark if applicable</span>
+                                    </label>
+
+                                    <div>
+                                      <p className='font-roboto text-sm font-semibold'>Response :</p>
+                                      <textarea
+                                        className='number-input border-b-[1px] border-0 min-w-[60%] mt-1'
+                                        rows="2"
+                                        onChange={(e) => {
+                                          const value = e.target.value;
+
+                                          setExpertFinalResponses((prevResponses) => {
+                                            const updatedResponses = [...prevResponses];
+                                            updatedResponses[index].responses[idx] = {
+                                              ...updatedResponses[index].responses[idx],
+                                              answer: value,
+                                            };
+
+                                            return updatedResponses;
+                                          });
+                                        }}
+                                        value={expertfinalResponses[index]?.responses[idx]?.answer || ""}
+                                        placeholder="Type your response..."
+                                      />
+                                    </div>
+
+                                    <div className='flex flex-col gap-2 sm:flex-row w-full'>
+                                      <div className='flex'>
+                                        <div className='border-b-[1px]'>
+                                          <input
+                                            type="number"
+                                            min="0"
+                                            required='required'
+                                            max={question.mark}
+                                            className="border-0 w-6 h-6 p-0 number-input focus:outline-0 bg-none"
+                                            onWheel={(e) => e.currentTarget.blur()}
+                                            onChange={(e) => {
+                                              const value = Math.min(Math.max(parseInt(e.target.value) || 0, 0), expertfinalResponses[index].responses[idx]?.actualMark || 0);
+
+                                              setExpertFinalResponses((prevResponses) => {
+                                                const updatedResponses = [...prevResponses];
+
+                                                updatedResponses[index].responses[idx].markGot = value;
+
+                                                return updatedResponses;
+                                              });
+                                            }}
+                                            value={expertfinalResponses[index]?.responses[idx]?.markGot || 0}
+                                          />
+                                        </div>
+                                        <p>/ </p>
+                                        <div>
+                                          <p>{question.mark}</p>
+                                        </div>
+                                      </div>
+
+                                      <div className='bg-richblue-600 w-6 h-6 rounded-full text-richblue-10 flex justify-center items-center '>
+                                        <p>{expertfinalResponses[index]?.responses[idx]?.markGot || 0}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {question.quesType !== "Response" && !(/check.*response/i).test(question.quesType || "") && (
                                   <div className='flex flex-col gap-2 sm:flex-row '>
                                     <div className='flex'>
                                       <div className='border-b-[1px]'>
@@ -693,6 +788,7 @@ const [marksGot,setmarksGot]=useState()
                               <div className='font-semibold font-roboto underline'>{response.headingType}</div>}
 
                             {response.responses.map((ques, idx) => {
+                              const qType = getQuesType(response.headingType, ques.question, 'expert');
                               return (
                                 <div key={idx} className='text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-xl cursor-pointer'>
                                   <div className='flex flex-col max-w-[70%] min-w-[70%]'>
@@ -711,11 +807,11 @@ const [marksGot,setmarksGot]=useState()
                                       )}
                                     </div>
                                   </div>
-                                  {ques.answer === null && <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
-                                    <p>{ques.markGot}/{ques.actualMark}</p>
-                                  </div>
-
-                                  }
+                                  {!(/^Response$/i.test(qType || "")) && (
+                                    <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
+                                      <p>{ques.markGot}/{ques.actualMark}</p>
+                                    </div>
+                                  )}
 
                                 </div>
                               );

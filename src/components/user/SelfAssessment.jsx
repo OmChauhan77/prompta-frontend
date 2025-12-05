@@ -32,6 +32,19 @@ function SelfAssessment({ forloading, popup }) {
   const inputRef = useRef();
   const [file, setFiles] = useState([]);
 
+  // helper to find original quesType from question bank using heading and question text
+  const getQuesType = (headingType, questionText) => {
+    try {
+      const group = question?.[0]?.userQues?.find(
+        (g) => g.headingType === headingType
+      );
+      if (!group) return null;
+      const qObj = group.questions.find((q) => q.ques === questionText);
+      return qObj?.quesType || null;
+    } catch (err) {
+      return null;
+    }
+  };
   const handleFileChange = (event) => {
     const newFiles = [...file, event.target.files];
     setFiles(newFiles);
@@ -500,7 +513,103 @@ function SelfAssessment({ forloading, popup }) {
                     )}
                   </div>
 
-                  {question.quesType !== "Response" && (
+                  {(/check.*response/i).test(question.quesType || "") && (
+                    <div className="flex flex-col gap-2 w-full">
+                      <label className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={
+                            !!userfinalResponses[index]?.responses[idx]?.checked
+                          }
+                          onChange={(e) => {
+                            const checked = e.target.checked;
+                            setUserFinalResponses((prevResponses) => {
+                              const updatedResponses = [...prevResponses];
+                              updatedResponses[index].responses[idx] = {
+                                ...updatedResponses[index].responses[idx],
+                                checked,
+                              };
+                              return updatedResponses;
+                            });
+                          }}
+                        />
+                        <span className="font-roboto text-sm">Mark if applicable</span>
+                      </label>
+
+                      <div>
+                        <p className="font-roboto text-sm font-semibold">Response :</p>
+                        <textarea
+                          className="number-input border-b-[1px] border-0 min-w-[60%] mt-1"
+                          rows="2"
+                          onChange={(e) => {
+                            const value = e.target.value;
+
+                            setUserFinalResponses((prevResponses) => {
+                              const updatedResponses = [...prevResponses];
+                              updatedResponses[index].responses[idx] = {
+                                ...updatedResponses[index].responses[idx],
+                                answer: value,
+                              };
+
+                              return updatedResponses;
+                            });
+                          }}
+                          value={
+                            userfinalResponses[index]?.responses[idx]?.answer || ""
+                          }
+                          placeholder="Type your response..."
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-2 sm:flex-row w-full">
+                        <div className="flex">
+                          <div className="border-b-[1px]">
+                            <input
+                              type="number"
+                              min="0"
+                              required="required"
+                              max={question.mark}
+                              className="border-0 w-6 h-6 p-0 number-input focus:outline-0 bg-none"
+                              onWheel={(e) => e.currentTarget.blur()}
+                              onChange={(e) => {
+                                const value = Math.min(
+                                  Math.max(parseInt(e.target.value) || 0, 0),
+                                  userfinalResponses[index].responses[idx]
+                                    ?.actualMark || 0
+                                );
+
+                                setUserFinalResponses((prevResponses) => {
+                                  const updatedResponses = [...prevResponses];
+
+                                  updatedResponses[index].responses[idx].markGot =
+                                    value;
+
+                                  return updatedResponses;
+                                });
+                              }}
+                              value={
+                                userfinalResponses[index]?.responses[idx]
+                                  ?.markGot || 0
+                              }
+                            />
+                          </div>
+                          <p>/ </p>
+                          <div>
+                            <p>{question.mark}</p>
+                          </div>
+                        </div>
+
+                        <div className="bg-richblue-600 w-6 h-6 rounded-full text-richblue-10 flex justify-center items-center ">
+                          <p>
+                            {userfinalResponses[index]?.responses[idx]?.markGot ||
+                              0}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {question.quesType !== "Response" && !(/check.*response/i).test(question.quesType || "") && (
                     <div className="flex flex-col gap-2 sm:flex-row ">
                       <div className="flex">
                         <div className="border-b-[1px]">
@@ -604,6 +713,7 @@ function SelfAssessment({ forloading, popup }) {
               )}
 
               {response.responses.map((ques, idx) => {
+                const qType = getQuesType(response.headingType, ques.question);
                 return (
                   <div
                     key={idx}
@@ -627,7 +737,8 @@ function SelfAssessment({ forloading, popup }) {
                         )}
                       </div>
                     </div>
-                    {ques.answer === null && (
+                    {/* Show marks for all non-pure-Response question types (including Checkbox+Response) */}
+                    {!(/^Response$/i.test(qType || "")) && (
                       <div className="bg-richblue-600  w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center ">
                         <p>
                           {ques.markGot}/{ques.actualMark}

@@ -31,6 +31,17 @@ function ExpertSubmission({ forloading }) {
   const [formDataToSend, setFormDataToSend] = useState(new FormData());
   const [submissionData, setsubmissionData] = useState();
   const [question, setQuestion] = useState([]);
+  // helper to find original quesType from question bank using heading and question text
+  const getQuesType = (headingType, questionText) => {
+    try {
+      const group = question?.[0]?.expertQues?.find((g) => g.headingType === headingType);
+      if (!group) return null;
+      const qObj = group.questions.find((q) => q.ques === questionText);
+      return qObj?.quesType || null;
+    } catch (err) {
+      return null;
+    }
+  };
   const [expertmarkGot, setExpertmarkGot] = useState()
   const [selftotal, setSelftotal] = useState()
   const [marksGot, setmarkGot] = useState()
@@ -333,8 +344,9 @@ Next
           return <div key={index}>
             {response.responses.length > 0 && <div className='font-semibold font-roboto underline'>{response.headingType}</div>}
 
-            {response.responses.map((ques, idx) => {
-              return (
+      {response.responses.map((ques, idx) => {
+        const qType = getQuesType(response.headingType, ques.question);
+        return (
                 <div key={idx} className='text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-xl cursor-pointer'>
                   <div className='flex flex-col max-w-[70%] min-w-[70%]'>
                     <div className='text-richblue-300 font-semibold min-w-[70%]'>
@@ -352,11 +364,11 @@ Next
                       )}
                     </div>
                   </div>
-                  {ques.answer === null && <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
-                    <p>{ques.markGot}/{ques.actualMark}</p>
-                  </div>
-
-                  }
+                  {!(/^Response$/i.test(qType || "")) && (
+                    <div className='bg-richblue-600 w-8 h-8 rounded-full text-richblue-10 flex justify-center items-center '>
+                      <p>{ques.markGot}/{ques.actualMark}</p>
+                    </div>
+                  )}
 
                 </div>
               );
