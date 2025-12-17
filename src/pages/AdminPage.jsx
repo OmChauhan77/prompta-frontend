@@ -3,6 +3,7 @@ import Navbar from "../components/user/Navbar"
 import Folder from "../assets/folder"
 import { Link } from 'react-router-dom';
 import Footer from '../components/HomePage/Footer'
+import MessageWidget from '../components/user/MessageWidget'
 
 const AdminPage = () => {
   return (
@@ -11,6 +12,7 @@ const AdminPage = () => {
   
     <div className='min-h-[100vh] font-inter'>
     <Navbar></Navbar>
+    <MessageWidget />
 <div className='max-w-[90%] sm:max-w-4xl mx-auto '>
 
 

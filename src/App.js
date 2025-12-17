@@ -23,7 +23,6 @@ import Submission from "./components/user/Submission"
 import ViewSubmission from './components/admin/ViewSubmission';
 import NewSubmission from './components/user/NewSubmission';
 import Chatapp from './components/admin/Chatapp';
-import Chatsupport from './components/user/Chatsupport'
 import UserSubmission from './components/admin/UserSubmission';
 import Reports from "./components/admin/Reports"
 import UserReport from './components/admin/UserReport';
@@ -75,7 +74,6 @@ function App() {
         <Route element={< ProtectedRoute />}>
 
           <Route path="/students/dashboard" element={<User />} />
-          <Route path="/students/chat_support" element={<Chatsupport />} />
           <Route path="/students/new_assessment" element={<NewAssessment />} />
           <Route path="/students/all_assessments" element={<Allassessment />} />
           <Route path="/students/new_submission/:AssignmentId/:Id/:params" element={<NewSubmission />} />

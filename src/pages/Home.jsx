@@ -183,17 +183,6 @@ const Home = () => {
                                                     )} to='/profileupdate'>    <div className='cursor-pointer'><p>My profile</p></div></Link>
                                                 )}
                                             </Menu.Item>
-                                            <Menu.Item>
-                                                {({ active }) => (
-                                                    <Link className={classNames(
-                                                        active ? 'bg-[#f3f4f6] text-gray-900' : 'text-gray-700',
-                                                        'block px-4 py-2 text-sm'
-                                                    )} to={user?.accountType === "Student" ? "/students/chat_support" : "/adminpannel/chat_with_users"}>
-                                                        <div className='cursor-pointer'><p> {user?.accountType === "Student" ? "Chat Support" : "Chat With Users"}</p></div>
-
-                                                    </Link >
-                                                )}
-                                            </Menu.Item>
                                             <form method="POST" action="#">
                                                 <Menu.Item>
                                                     {({ active }) => (

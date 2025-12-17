@@ -1086,16 +1086,14 @@ export const SetQuestion = () => {
                                       </div>
                                       <div className="text-xs text-richblue-300 bg-richblue-100 w-[70px] flex justify-center rounded-lg items-center">
                                         <p>{ques.quesType}</p>
-                                        {/* Optional: Add indicator for Checkbox+Response */}
-                                        {ques.quesType ===
-                                          "Checkbox+Response" && (
+                                        {/* Optional: Add indicator for Checkbox+Feedback */}
+                                        {/* {(/check.*feedback/i).test(ques.quesType || "") && (
                                           <span
                                             className="ml-1"
-                                            title="Includes Checkbox and Response"
+                                            title="Includes Checkbox and Feedback"
                                           >
-                                            📝✔️
                                           </span>
-                                        )}
+                                        )} */}
                                       </div>
                                       <div
                                         className="mr-4 flex justify-center items-center text-lg cursor-pointer"
@@ -1122,7 +1120,7 @@ export const SetQuestion = () => {
                             className="text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-lg"
                           >
                             <div className="text-richblue-300 max-w-[70%] min-w-[70%]">
-                              <p>
+                              <p className="text-orange-600 font-bold">
                                 {index + 1}. {userQues.ques}
                               </p>
                             </div>
@@ -1172,8 +1170,8 @@ export const SetQuestion = () => {
                               Questions Type
                             </option>
                             <option>Check Box</option>
-                            <option>Response</option>
-                            <option>Check Box+Response</option>
+                            <option>Feedback</option>
+                            <option>Check Box+Feedback</option>
                           </select>
                         </div>
                       </div>
@@ -1296,7 +1294,7 @@ export const SetQuestion = () => {
                             className="text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-lg"
                           >
                             <div className="text-richblue-300 max-w-[70%] min-w-[70%]">
-                              <p>
+                              <p className="text-orange-600 font-bold">
                                 {index + 1}. {peerQues.ques}
                               </p>
                             </div>
@@ -1345,8 +1343,8 @@ export const SetQuestion = () => {
                               Questions Type
                             </option>
                             <option>Check Box</option>
-                            <option>Response</option>
-                            <option>Check Box+Response</option>
+                            <option>Feedback</option>
+                            <option>Check Box+Feedback</option>
                           </select>
                         </div>
                       </div>
@@ -1468,7 +1466,7 @@ export const SetQuestion = () => {
                             className="text-richlue-900 bg-richblue-10 m-2 p-2 rounded-md flex justify-between items-center shadow-lg"
                           >
                             <div className="text-richblue-300 max-w-[70%] min-w-[70%]">
-                              <p>
+                              <p className="text-orange-600 font-bold">
                                 {index + 1}. {expertQues.ques}
                               </p>
                             </div>
@@ -1517,8 +1515,8 @@ export const SetQuestion = () => {
                               Questions Type
                             </option>
                             <option>Check Box</option>
-                            <option>Response</option>
-                            <option>Check Box+Response</option>
+                            <option>Feedback</option>
+                            <option>Check Box+Feedback</option>
                           </select>
                         </div>
                       </div>
@@ -1813,7 +1811,7 @@ export const SetQuestion = () => {
                               </option>
                               <option>Check Box</option>
                               <option>Response</option>
-                              <option>Check Box+response</option>
+                              <option>Check Box+Feedback</option>
                             </select>
                           </div>
                         </div>

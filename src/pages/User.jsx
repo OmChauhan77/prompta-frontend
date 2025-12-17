@@ -3,12 +3,14 @@ import Navbar from "../components/user/Navbar"
 import Folder from "../assets/folder"
 import { Link } from 'react-router-dom';
 import Footer from '../components/HomePage/Footer'
+import MessageWidget from '../components/user/MessageWidget'
 
 const User = () => {
   return (
     <div>
       <div className="min-h-screen font-inter">
         <Navbar></Navbar>
+        <MessageWidget />
         <div className="max-w-[90%] sm:max-w-4xl mx-auto ">
           <div className="flex flex-col sm:flex-row  mt-8  justify-between items-center">
             <Link to="/students/all_assessments">
@@ -58,7 +60,7 @@ const User = () => {
               <div className="flex cursor-pointer p-4 rounded-sm hover:bg-gray-100 flex-col justify-center  items-center">
                 <Folder />
 
-                <div className="text-xl pb-6 font-bold ">My Course</div>
+                <div className="text-xl pb-6 font-bold ">My Courses</div>
               </div>
             </Link>
 

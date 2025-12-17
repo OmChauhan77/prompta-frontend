@@ -416,7 +416,7 @@ loading ? (<div className='flex justify-center items-center h-[100vh] sm:signinb
                         </div>
 
                         {
-                          question.quesType === "Response" && (
+                          question.quesType === "Feedback" && (
                             <div>
                               <div>
                                 <p className='font-roboto text-sm font-semibold'>Response :</p>
@@ -445,7 +445,7 @@ loading ? (<div className='flex justify-center items-center h-[100vh] sm:signinb
 
 
 
-                      {question.quesType !== "Response" && (
+                      {question.quesType !== "Feedback" && (
                         <div className='flex flex-col gap-2 sm:flex-row '>
                           <div className='flex'>
                             <div className='border-b-[1px]'>
@@ -648,7 +648,7 @@ loading ? (<div className='flex justify-center items-center h-[100vh] sm:signinb
                         </div>
 
                         {
-                          question.quesType === "Response" && (
+                          question.quesType === "Feedback" && (
                             <div>
                               <div>
                                 <p className='font-roboto text-sm font-semibold'>Response :</p>
@@ -677,7 +677,7 @@ loading ? (<div className='flex justify-center items-center h-[100vh] sm:signinb
 
 
 
-                      {question.quesType !== "Response" && (
+                      {question.quesType !== "Feedback" && (
                         <div className='flex flex-col gap-2 sm:flex-row '>
                           <div className='flex'>
                             <div className='border-b-[1px]'>

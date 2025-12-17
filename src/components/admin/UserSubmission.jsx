@@ -623,7 +623,7 @@ const [marksGot,setmarksGot]=useState()
                                   </div>
 
                                   {
-                                    question.quesType === "Response" && (
+                                    question.quesType === "Feedback" && (
                                       <div>
                                         <div>
                                           <p className='font-roboto text-sm font-semibold'>Response :</p>
@@ -649,7 +649,7 @@ const [marksGot,setmarksGot]=useState()
                                     )}
                                 </div>
 
-                                {(/check.*response/i).test(question.quesType || "") && (
+                                {(/check.*feedback/i).test(question.quesType || "") && (
                                   <div className='flex flex-col gap-2 w-full'>
                                     <label className="flex items-center gap-3">
                                       <input
@@ -730,7 +730,7 @@ const [marksGot,setmarksGot]=useState()
                                   </div>
                                 )}
 
-                                {question.quesType !== "Response" && !(/check.*response/i).test(question.quesType || "") && (
+                                {question.quesType !== "Feedback" && !(/check.*feedback/i).test(question.quesType || "") && (
                                   <div className='flex flex-col gap-2 sm:flex-row '>
                                     <div className='flex'>
                                       <div className='border-b-[1px]'>

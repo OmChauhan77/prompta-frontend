@@ -74,10 +74,6 @@ const Navbar = () => {
 
     const userNavigation = [
         { name: 'Your Profile', href: '/profileupdate' },
-        {
-            name: 'Chat Support',
-            href: user.accountType === "Student" ? "/students/chat_support" : "/adminpannel/chat_with_users"
-        },
     ];
 
 
@@ -126,12 +122,6 @@ const Navbar = () => {
 
 
                         }
-
-
-                        <Link to={user.accountType === "Student" ? "/students/chat_support" : "/adminpannel/chat_with_users"}>
-                            <div className='flex ml-12  cursor-pointer mb-4 items-center group hover:bg-richblue-10 hover:bg-opacity-20 mr-6 h-10 ml-4 pl-8 rounded-md transition delay-75'>
-                                <MdChat className='text-richblue-10 group-hover:opacity-100  opacity-70  font-[500] mr-2 transition delay-75' /><p className='text-richblue-10 group-hover:opacity-100 opacity-80  font-[500] transition delay-75 text-nowrap'> {user.accountType === "Student" ? "Chat with experts" : "Chat with students"}</p></div>
-                        </Link>
 
 
                         {user.accountType === "Admin" && <div className='group'>
